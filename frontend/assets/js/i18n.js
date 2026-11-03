@@ -74,7 +74,8 @@
 
   function getLang() {
     const saved = localStorage.getItem(LANG_KEY);
-    return SUPPORTED.includes(saved) ? saved : "en";
+    // Varsayılan Türkçe; ziyaretçi EN'ye geçerse tercih saklanır
+    return SUPPORTED.includes(saved) ? saved : "tr";
   }
 
   window.i18n = {

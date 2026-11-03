@@ -13,8 +13,8 @@
   var theme = read("theme");
   if (theme === "dark" || theme === "light") root.setAttribute("data-theme", theme);
 
-  // Dil: sitedeki kayıtlı tercih (varsayılan site gibi İngilizce)
-  var lang = read("lang") === "tr" ? "tr" : "en";
+  // Dil: sitedeki kayıtlı tercih (varsayılan site gibi Türkçe)
+  var lang = read("lang") === "en" ? "en" : "tr";
   root.lang = lang;
 
   document.addEventListener("DOMContentLoaded", function () {
