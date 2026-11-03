@@ -8,8 +8,8 @@ Tüm istekler göreli adreslere gider (`/api/...`, `/static/...`); frontend ve b
 
 **Docker Compose (önerilen):** proje kökünde `docker compose up -d`. nginx (`../nginx/default.conf`) bu klasörü sunar ve `/api/`, `/static/` isteklerini backend'e iletir. Ayarlar kökteki `.env`'den okunur (örnek: `../.env.example`).
 
-- Canlıda nginx 80 portunu dinler; veritabanı ve backend dışarıya açılmaz.
-- Yerelde `.env`'e `NGINX_PORT=3000` ve `COMPOSE_FILE=compose.yaml:compose.dev.yaml` yazılınca:
+- Canlıda hiçbir port açılmaz; trafik Dokploy / Cloudflare Tunnel üzerinden nginx'e gelir.
+- Yerelde `.env`'e `COMPOSE_FILE=compose.yaml:compose.dev.yaml` yazılınca:
   - Site: http://localhost:3000
   - Admin: http://localhost:3000/admin/ (ilk kullanıcı `.env`'deki `ADMIN_USERNAME` / `ADMIN_PASSWORD`; yalnızca kullanıcı tablosu boşken uygulanır)
   - Backend (Bruno için): http://localhost:8080, veritabanı: localhost:5432 (ikisi de yalnızca bu makineden erişilebilir)

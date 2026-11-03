@@ -66,9 +66,10 @@ services:
       # Backend tamamen açılmadan nginx başlamasın; açılışta 502 görünmesin.
       backend:
         condition: service_healthy
-    ports:
-      # Canlıda 80. Yerelde .env'de NGINX_PORT=3000.
-      - '${NGINX_PORT:-80}:80'
+    # Sunucuda port açılmaz: trafik Dokploy (Traefik) ya da Cloudflare Tunnel üzerinden gelir.
+    # Yerelde port compose.dev.yaml'dan açılır.
+    expose:
+      - '80'
     volumes:
       # default.conf + backend-proxy.inc
       - ./nginx:/etc/nginx/conf.d:ro
