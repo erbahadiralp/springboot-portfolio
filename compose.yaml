@@ -61,7 +61,10 @@ services:
     restart: unless-stopped
 
   nginx:
-    image: nginx:stable
+    # Site ve nginx ayarları imaja gömülü (bkz. nginx/Dockerfile); her deploy'da yeniden derlenir.
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
     depends_on:
       # Backend tamamen açılmadan nginx başlamasın; açılışta 502 görünmesin.
       backend:
@@ -70,10 +73,6 @@ services:
     # Yerelde port compose.dev.yaml'dan açılır.
     expose:
       - '80'
-    volumes:
-      # default.conf + backend-proxy.inc
-      - ./nginx:/etc/nginx/conf.d:ro
-      - ./frontend:/usr/share/nginx/html:ro
     logging: *logging
     restart: unless-stopped
 

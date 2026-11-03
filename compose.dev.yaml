@@ -11,3 +11,7 @@ services:
   nginx:
     ports:
       - '${NGINX_PORT:-3000}:80'
+    # Yerelde dosyalar doğrudan klasörden okunur: frontend değişiklikleri yeniden derlemeden görünür.
+    volumes:
+      - ./nginx:/etc/nginx/conf.d:ro
+      - ./frontend:/usr/share/nginx/html:ro

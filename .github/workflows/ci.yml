@@ -49,3 +49,6 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t portfolio-backend:ci .
+
+      - name: Build nginx image
+        run: docker build -f nginx/Dockerfile -t portfolio-nginx:ci .

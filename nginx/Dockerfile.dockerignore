@@ -1,0 +1,9 @@
+# nginx imajı için (kökteki .dockerignore yerine bu kullanılır). Yollar proje köküne göre.
+*
+!nginx/default.conf
+!nginx/backend-proxy.inc
+!frontend/
+# Sunulmaması gereken geliştirme dosyaları
+frontend/**/*.md
+frontend/server.js
+frontend/package.json
