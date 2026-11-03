@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/portfolio_test
+  jpa:
+    show-sql: false
+
+app:
+  jwt:
+    secret: test-secret-test-secret-test-secret-123456
+  upload:
+    dir: ./target/test-uploads

@@ -1,0 +1,6 @@
+# Backend imajı yalnızca pom.xml ve src/ ile derlenir (bkz. Dockerfile).
+# Geri kalan her şey dışarıda kalır: .env, uploads, frontend, .git, IDE dosyaları vb.
+# İmaja yeni bir dosya gerekirse buraya "!dosya" satırı ekle.
+*
+!pom.xml
+!src/

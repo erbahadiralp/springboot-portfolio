@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- 503 hata sayfası (nginx error_page ile sunulur). errors/ altındaki diğer sayfalarla aynı iskelet; birini değiştirirken diğerlerini de güncelle. -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title data-tr="Hizmet şu an kullanılamıyor · 503">Service unavailable · 503</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Yollar mutlak: sayfa herhangi bir adreste (ör. /a/b/c) gösterilebilir -->
+    <script src="/errors/errors.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts CSS'i tarayıcıya göre farklı içerik döndürdüğü için SRI uygulanamaz; CSP ile sınırlandırıldı. -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/errors/errors.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="/" class="brand" aria-label="Ana sayfa">&gt;_</a>
+            <span class="status-pill">HTTP 503</span>
+        </div>
+    </header>
+
+    <main class="error">
+        <p class="code" aria-hidden="true">5<span>0</span>3</p>
+        <h1 data-tr="Hizmet şu an kullanılamıyor">Service unavailable</h1>
+        <p class="lead" data-tr="Sunucu şu an yanıt vermiyor; bakımda olabilir. Lütfen biraz sonra tekrar dene.">The server isn&#x27;t responding right now. It may be under maintenance, please try again shortly.</p>
+
+        <div class="actions">
+            <button type="button" class="btn btn-primary" data-retry data-requires-js><span aria-hidden="true">↻</span> <span data-tr="Tekrar dene">Try again</span></button>
+            <a href="/" class="btn btn-ghost"><span aria-hidden="true">↖</span> <span data-tr="Ana sayfaya dön">Go to homepage</span></a>
+        </div>
+
+        <div class="terminal" aria-hidden="true">
+            <div class="terminal-bar"><span></span><span></span><span></span><em>~/portfolio</em></div>
+            <div class="terminal-body">
+                <div><span class="p">$</span> <span class="hl">ping api</span></div>
+                <div><span class="err">✗ request timed out</span></div>
+                <div><span class="p">$</span> <span class="hl">sleep 30 &amp;&amp; ping api</span> <span class="cursor"></span></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">&gt;_ portfolio · error 503</div>
+    </footer>
+</body>
+</html>

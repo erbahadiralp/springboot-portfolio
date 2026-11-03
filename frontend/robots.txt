@@ -1,0 +1,7 @@
+# robots.txt bir koruma değildir; yalnızca kurallara uyan botlara yol gösterir.
+# Admin paneli burada bilerek anılmaz (yolunu ilan etmemek için); nginx /admin/ için
+# "X-Robots-Tag: noindex" başlığı gönderir.
+User-agent: *
+Disallow: /api/
+
+Sitemap: https://bahadiralper.com/sitemap.xml

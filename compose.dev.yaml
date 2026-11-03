@@ -1,0 +1,10 @@
+# Yalnızca yerel geliştirme: veritabanını (IntelliJ / psql) ve backend'i (Bruno) bu makineye açar.
+# Portlar 127.0.0.1'e bağlı; ağdaki diğer cihazlardan erişilemez. Canlıda KULLANMA.
+# Kullanım: .env'e  COMPOSE_FILE=compose.yaml:compose.dev.yaml  yaz, sonra her zamanki gibi `docker compose up -d`.
+services:
+  postgres:
+    ports:
+      - '127.0.0.1:5432:5432'
+  backend:
+    ports:
+      - '127.0.0.1:8080:8080'

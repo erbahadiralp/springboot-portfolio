@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- 404 hata sayfası (nginx error_page ile sunulur). errors/ altındaki diğer sayfalarla aynı iskelet; birini değiştirirken diğerlerini de güncelle. -->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title data-tr="Sayfa bulunamadı · 404">Page not found · 404</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <!-- Yollar mutlak: sayfa herhangi bir adreste (ör. /a/b/c) gösterilebilir -->
+    <script src="/errors/errors.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Google Fonts CSS'i tarayıcıya göre farklı içerik döndürdüğü için SRI uygulanamaz; CSP ile sınırlandırıldı. -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/errors/errors.css">
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar-inner">
+            <a href="/" class="brand" aria-label="Ana sayfa">&gt;_</a>
+            <span class="status-pill">HTTP 404</span>
+        </div>
+    </header>
+
+    <main class="error">
+        <p class="code" aria-hidden="true">4<span>0</span>4</p>
+        <h1 data-tr="Sayfa bulunamadı">Page not found</h1>
+        <p class="lead" data-tr="Aradığın sayfa yok ya da taşınmış olabilir.">The page you&#x27;re looking for doesn&#x27;t exist or has been moved.</p>
+
+        <div class="actions">
+            <a href="/" class="btn btn-primary"><span aria-hidden="true">↖</span> <span data-tr="Ana sayfaya dön">Go to homepage</span></a>
+            <button type="button" class="btn btn-ghost" data-back data-requires-js><span aria-hidden="true">←</span> <span data-tr="Geri dön">Go back</span></button>
+        </div>
+
+        <div class="terminal" aria-hidden="true">
+            <div class="terminal-bar"><span></span><span></span><span></span><em>~/portfolio</em></div>
+            <div class="terminal-body">
+                <div><span class="p">$</span> <span class="hl">cd <span data-path>/</span></span></div>
+                <div><span class="err">cd: no such file or directory</span></div>
+                <div><span class="p">$</span> <span class="hl">cd ~</span> <span class="cursor"></span></div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-inner">&gt;_ portfolio · error 404</div>
+    </footer>
+</body>
+</html>

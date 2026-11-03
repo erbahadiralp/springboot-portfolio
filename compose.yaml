@@ -1,0 +1,81 @@
+# Canlı (VPS) yapılandırması. Dışarıya yalnızca nginx açılır; veritabanı ve backend
+# sadece Docker ağı içinden erişilebilir. Değerler .env'den okunur (bkz. .env.example).
+# Yerelde 5432 / 8080'e erişmek için compose.dev.yaml (.env'de COMPOSE_FILE ile otomatik eklenebilir).
+
+# Konteyner logları en fazla 3 x 10 MB tutulur; aksi halde zamanla diski doldurur.
+x-logging: &logging
+  driver: json-file
+  options:
+    max-size: "10m"
+    max-file: "3"
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: portfolio
+      POSTGRES_USER: portfolio
+      # Yalnızca veritabanı ilk kez oluşturulurken uygulanır; volume varken değiştirmek şifreyi değiştirmez.
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD tanimli degil}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U portfolio -d portfolio"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    logging: *logging
+    restart: unless-stopped
+
+  backend:
+    build: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/portfolio
+      SPRING_DATASOURCE_USERNAME: portfolio
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD tanimli degil}
+      SPRING_JPA_SHOW_SQL: "false"
+      JWT_SECRET: ${JWT_SECRET:?JWT_SECRET tanimli degil}
+      ADMIN_USERNAME: ${ADMIN_USERNAME:?ADMIN_USERNAME tanimli degil}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?ADMIN_PASSWORD tanimli degil}
+      TURNSTILE_SECRET: ${TURNSTILE_SECRET:?TURNSTILE_SECRET tanimli degil}
+      # Token'ın üretildiği alan adı bunlardan biri olmalı. Yerelde .env'de TURNSTILE_ALLOWED_HOSTNAMES=localhost.
+      TURNSTILE_ALLOWED_HOSTNAMES: ${TURNSTILE_ALLOWED_HOSTNAMES:-bahadiralper.com,www.bahadiralper.com}
+      TZ: Europe/Istanbul
+      UPLOAD_DIR: /app/uploads
+      # JVM, konteynerin bellek sınırının %75'ini kullanır (sınır aşağıda mem_limit ile).
+      JAVA_TOOL_OPTIONS: "-XX:MaxRAMPercentage=75"
+    # Küçük bir VPS'te Postgres ile bellek için yarışmasın. Gerekirse .env'de BACKEND_MEMORY ile değiştir.
+    mem_limit: ${BACKEND_MEMORY:-768m}
+    volumes:
+      - uploads_data:/app/uploads
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/actuator/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+    logging: *logging
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:stable
+    depends_on:
+      # Backend tamamen açılmadan nginx başlamasın; açılışta 502 görünmesin.
+      backend:
+        condition: service_healthy
+    ports:
+      # Canlıda 80. Yerelde .env'de NGINX_PORT=3000.
+      - '${NGINX_PORT:-80}:80'
+    volumes:
+      # default.conf + backend-proxy.inc
+      - ./nginx:/etc/nginx/conf.d:ro
+      - ./frontend:/usr/share/nginx/html:ro
+    logging: *logging
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  uploads_data:

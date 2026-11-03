@@ -1,0 +1,9 @@
+{
+  "name": "myportfolio-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Portfolyo sitesi frontend'i (sade HTML/CSS/JS)",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
