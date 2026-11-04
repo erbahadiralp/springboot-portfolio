@@ -11,7 +11,7 @@ services:
   nginx:
     ports:
       - '${NGINX_PORT:-3000}:80'
-    # Yerelde dosyalar doğrudan klasörden okunur: frontend değişiklikleri yeniden derlemeden görünür.
+    # nginx ayarları klasörden okunur (değişiklik için: docker compose exec nginx nginx -s reload).
+    # Site dosyaları imajdan gelir; frontend üzerinde çalışırken `npm run dev` kullan (frontend/README.md).
     volumes:
       - ./nginx:/etc/nginx/conf.d:ro
-      - ./frontend:/usr/share/nginx/html:ro

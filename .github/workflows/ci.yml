@@ -40,15 +40,17 @@ jobs:
           distribution: temurin
           java-version: '21'
           cache: maven
+          cache-dependency-path: backend/pom.xml
 
       - name: Make mvnw executable
-        run: chmod +x mvnw
+        run: chmod +x backend/mvnw
 
       - name: Run tests
+        working-directory: backend
         run: ./mvnw -B test
 
       - name: Build Docker image
-        run: docker build -t portfolio-backend:ci .
+        run: docker build -t portfolio-backend:ci backend
 
       - name: Build nginx image
         run: docker build -f nginx/Dockerfile -t portfolio-nginx:ci .

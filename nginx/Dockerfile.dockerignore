@@ -3,7 +3,8 @@
 !nginx/default.conf
 !nginx/backend-proxy.inc
 !frontend/
-# Sunulmaması gereken geliştirme dosyaları
+# Bilgisayardaki kurulum ve derleme çıktısı imaja girmez; imajın içinde yeniden oluşturulur
+frontend/node_modules
+frontend/dist
+# Belgeler (sunulmaz)
 frontend/**/*.md
-frontend/server.js
-frontend/package.json

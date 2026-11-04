@@ -18,6 +18,7 @@ target/
 
 ### Frontend (server.js ile yerel geliştirme) ###
 node_modules/
+frontend/dist/
 
 ### STS ###
 .apt_generated
